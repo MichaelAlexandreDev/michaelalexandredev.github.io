@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Portfólio de Michael Alexandre Schimitt Salvador, desenvolvedor backend Java, Go e Python.">
+  <meta name="theme-color" content="#090909">
+  <meta property="og:title" content="Michael Salvador — Desenvolvedor Backend">
+  <meta property="og:description" content="APIs, sistemas concorrentes, AWS, Docker e ferramentas de linha de comando.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://devstarrk1137.github.io/">
+  <title>Michael Salvador — Desenvolvedor Backend</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Página inicial">MS<span>.</span></a>
+    <nav aria-label="Navegação principal">
+      <a href="#sobre">Sobre</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#competencias">Competências</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <p class="eyebrow">Olá, eu sou o Michael.</p>
+        <h1>Construo backends confiáveis para problemas que exigem <em>clareza</em>.</h1>
+        <p class="lead">Desenvolvedor backend com projetos práticos em Java, Go e Python envolvendo concorrência, transações, AWS, testes e CI/CD.</p>
+        <div class="actions">
+          <a class="button primary" href="#projetos">Conheça meus projetos</a>
+          <a class="button secondary" href="curriculo.pdf" download>Baixar currículo</a>
+        </div>
+        <ul class="quick-facts" aria-label="Informações rápidas">
+          <li><span>Localização</span>Rolândia, PR</li>
+          <li><span>Formação</span>Ciência da Computação</li>
+          <li><span>Inglês</span>Intermediário</li>
+        </ul>
+      </div>
+      <div class="terminal" aria-label="Resumo técnico decorativo">
+        <div class="terminal-bar"><i></i><i></i><i></i><span>michael@archlinux</span></div>
+        <pre><code><span class="muted">$</span> whoami
+Michael Salvador
+
+<span class="muted">$</span> cat foco.txt
+Backend · APIs · Cloud
+
+<span class="muted">$</span> ls stack/
+Java  Go  Python  AWS
+Docker  Linux  Redis
+
+<span class="muted">$</span> status
+<span class="success">● pronto para construir</span></code></pre>
+      </div>
+    </section>
+
+    <section class="section about" id="sobre">
+      <p class="section-number">01 / Sobre</p>
+      <div class="section-grid">
+        <h2>Fundamentos fortes.<br>Execução prática.</h2>
+        <div>
+          <p>Desenvolvo soluções backend com atenção a regras de negócio, concorrência, persistência e falhas reais. Gosto de projetos em que a arquitetura permanece compreensível mesmo quando o domínio fica complexo.</p>
+          <p>Minha base inclui estruturas de dados e algoritmos, orientação a objetos, bancos SQL e NoSQL, Linux e automação. Também trabalho com orquestração de agentes e construção de agent harnesses.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projetos">
+      <p class="section-number">02 / Projetos selecionados</p>
+      <div class="projects">
+        <article class="project featured" id="wallet-api">
+          <div class="project-index">01</div>
+          <div>
+            <p class="tags">Java 21 · Spring Boot · PostgreSQL · Docker</p>
+            <h3>Wallet API</h3>
+            <p>API de transferências com atomicidade, proteção contra gasto duplo, integrações HTTP resilientes e notificações persistentes. Testada com PostgreSQL real via Testcontainers.</p>
+            <ul>
+              <li>Locks pessimistas ordenados e transações</li>
+              <li>Retentativas com FOR UPDATE SKIP LOCKED</li>
+              <li>JUnit, Mockito, Testcontainers e CI</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="project" id="tailwarden">
+          <div class="project-index">02</div>
+          <div>
+            <p class="tags">Go · AWS SDK v2 · Lambda · SAM</p>
+            <h3>Tailwarden</h3>
+            <p>Inventário de funções Lambda em múltiplas regiões, com paginação, concorrência limitada, filtros e tolerância a falhas parciais.</p>
+            <span class="project-status">Detalhes técnicos no currículo</span>
+          </div>
+        </article>
+
+        <article class="project" id="lume">
+          <div class="project-index">03</div>
+          <div>
+            <p class="tags">Java · Interpretadores · Tipos estáticos</p>
+            <h3>Lume</h3>
+            <p>Linguagem própria com inferência de tipos, funções, classes, traits, módulos, coleções tipadas, REPL e suíte de testes de integração.</p>
+            <a class="text-link" href="https://github.com/DevStarrk1137/Lume">Ver repositório <span>↗</span></a>
+          </div>
+        </article>
+
+        <article class="project" id="ayvu">
+          <div class="project-index">04</div>
+          <div>
+            <p class="tags">Python · SQLite · pytest · EPUB</p>
+            <h3>Ayvu</h3>
+            <p>CLI de tradução que preserva a estrutura de EPUBs e oferece cache, memória por similaridade, paralelismo, checkpoints e validação.</p>
+            <a class="text-link" href="https://github.com/DevStarrk1137/ayvu">Ver repositório <span>↗</span></a>
+          </div>
+        </article>
+
+        <article class="project" id="hookforge">
+          <div class="project-index">05</div>
+          <div>
+            <p class="tags">Em desenvolvimento · Java · Spring Boot · AWS · React</p>
+            <h3>HookForge</h3>
+            <p>Projeto prático de plataforma para entrega confiável de webhooks. O escopo inclui processamento assíncrono, retries, replay, DLQ, idempotência, rate limiting e assinatura HMAC.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="competencias">
+      <p class="section-number">03 / Competências</p>
+      <div class="skills">
+        <article><span>01</span><h3>Linguagens</h3><p>Java 21, Go, Python 3.11+, TypeScript, SQL e Bash</p></article>
+        <article><span>02</span><h3>Backend &amp; Web</h3><p>Spring Boot, REST, GraphQL, OpenAPI, Gin, React e integrações HTTP</p></article>
+        <article><span>03</span><h3>Dados</h3><p>PostgreSQL, SQLite, Redis, JPA e Flyway</p></article>
+        <article><span>04</span><h3>Cloud &amp; DevOps</h3><p>AWS Lambda, SQS, S3, Docker, GitHub Actions, CI/CD, Git e Arch Linux</p></article>
+        <article><span>05</span><h3>Qualidade</h3><p>JUnit, Mockito, Testcontainers, pytest e testes de integração</p></article>
+        <article><span>06</span><h3>Engenharia com agentes</h3><p>Orquestração de agentes e agent harnesses</p></article>
+      </div>
+    </section>
+
+    <section class="section achievement">
+      <p class="section-number">04 / Conquista</p>
+      <div class="rank"><strong>Top 1.3%</strong><div><h2>TCS CodeVita Season 13</h2><p>Resultado global em competição internacional de programação.</p></div></div>
+      <div class="cert-list">
+        <p><strong>Oracle · 2026</strong><span>Become an Oracle Agentic AI Foundations Associate</span></p>
+        <p><strong>Udemy · EmbarkX</strong><span>Java Spring Boot Full Stack: eCommerce Project Masterclass</span></p>
+        <p><strong>Claude Academy · 2026</strong><span>Claude 101, Claude Code 101, Agent Skills, Claude Cowork e MCP</span></p>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contato">
+      <p class="eyebrow">Vamos conversar?</p>
+      <h2>Estou construindo o próximo capítulo.</h2>
+      <p>Aberto a oportunidades de desenvolvimento backend, estágio e posições júnior.</p>
+      <a class="email" href="mailto:michaelsralt@gmail.com">michaelsralt@gmail.com <span>↗</span></a>
+      <div class="socials">
+        <a href="https://github.com/DevStarrk1137">GitHub</a>
+        <a href="https://www.linkedin.com/in/michael-alexandre-215b60380/">LinkedIn</a>
+        <a href="tel:+5543996568892">+55 (43) 99656-8892</a>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Michael Salvador</span><span>Rolândia, PR · 2026</span></footer>
+</body>
+</html>
