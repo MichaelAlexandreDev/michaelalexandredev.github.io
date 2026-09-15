@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="500" viewBox="0 0 760 500" role="img" aria-labelledby="title desc">
+  <title id="title">Current Ayvu pipeline</title>
+  <desc id="desc">The original EPUB is inspected and segmented while preserving markup. Text passes through cache, memory, and a local translator, receives glossary rules, is rebuilt into a new EPUB, and proceeds to review and validation.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#70e1c1"/>
+    </marker>
+    <style>
+      .box { fill: #151b22; stroke: #3a4653; stroke-width: 2; rx: 12; }
+      .strong { fill: #11221f; stroke: #70e1c1; }
+      .text { fill: #f5f7fa; font: 600 16px Arial, sans-serif; text-anchor: middle; }
+      .small { fill: #a9b2bd; font: 13px Arial, sans-serif; text-anchor: middle; }
+      .line { fill: none; stroke: #70e1c1; stroke-width: 2.5; marker-end: url(#arrow); }
+      .branch { fill: none; stroke: #86b7ff; stroke-width: 2; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="box strong" x="25" y="55" width="145" height="78"/>
+  <text class="text" x="97" y="87">Original EPUB</text>
+  <text class="small" x="97" y="110">read-only</text>
+
+  <rect class="box" x="225" y="45" width="160" height="98"/>
+  <text class="text" x="305" y="78">Inspection</text>
+  <text class="small" x="305" y="101">visible text</text>
+  <text class="small" x="305" y="121">protected markup</text>
+
+  <rect class="box" x="445" y="45" width="145" height="98"/>
+  <text class="text" x="517" y="78">Cache + TM</text>
+  <text class="small" x="517" y="101">exact match</text>
+  <text class="small" x="517" y="121">similarity</text>
+
+  <rect class="box" x="625" y="55" width="110" height="78"/>
+  <text class="text" x="680" y="87">Provider</text>
+  <text class="small" x="680" y="110">local HTTP</text>
+
+  <path class="line" d="M170 94 H215"/>
+  <path class="line" d="M385 94 H435"/>
+  <path class="line" d="M590 94 H615"/>
+
+  <rect class="box" x="530" y="220" width="150" height="78"/>
+  <text class="text" x="605" y="252">Glossary</text>
+  <text class="small" x="605" y="275">controlled terms</text>
+  <path class="line" d="M680 133 V180 Q680 210 650 210 H605 V210"/>
+
+  <rect class="box strong" x="280" y="210" width="185" height="98"/>
+  <text class="text" x="372" y="243">Reconstruction</text>
+  <text class="small" x="372" y="266">HTML and assets</text>
+  <text class="small" x="372" y="286">new EPUB file</text>
+  <path class="line" d="M530 259 H475"/>
+
+  <rect class="box" x="30" y="210" width="180" height="98"/>
+  <text class="text" x="120" y="243">CSV review</text>
+  <text class="small" x="120" y="266">export / apply</text>
+  <text class="small" x="120" y="286">human decision</text>
+  <path class="branch" d="M280 259 H220"/>
+
+  <rect class="box strong" x="280" y="385" width="185" height="78"/>
+  <text class="text" x="372" y="417">Final validation</text>
+  <text class="small" x="372" y="440">links · images · chapters</text>
+  <path class="line" d="M372 308 V375"/>
+
+  <path class="branch" d="M120 308 V424 H270"/>
+  <text class="small" x="117" y="350">reviewed EPUB</text>
+</svg>

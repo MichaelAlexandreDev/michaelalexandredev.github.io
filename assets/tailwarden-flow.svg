@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="480" viewBox="0 0 760 480" role="img" aria-labelledby="title desc">
+  <title id="title">Fluxo concorrente do Tailwarden</title>
+  <desc id="desc">A API valida filtros, descobre regiões e distribui as consultas para um conjunto limitado de workers. Cada worker pagina funções Lambda e opcionalmente consulta tags. Um agregador ordena os resultados e inclui avisos de falhas parciais.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#70e1c1"/>
+    </marker>
+    <style>
+      .box { fill: #151b22; stroke: #3a4653; stroke-width: 2; rx: 12; }
+      .strong { fill: #11221f; stroke: #70e1c1; }
+      .warn { fill: #171c22; stroke: #86b7ff; }
+      .text { fill: #f5f7fa; font: 600 16px Arial, sans-serif; text-anchor: middle; }
+      .small { fill: #a9b2bd; font: 13px Arial, sans-serif; text-anchor: middle; }
+      .line { fill: none; stroke: #70e1c1; stroke-width: 2.5; marker-end: url(#arrow); }
+      .dash { fill: none; stroke: #86b7ff; stroke-width: 2; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="box" x="25" y="70" width="155" height="88"/>
+  <text class="text" x="102" y="104">GET /functions</text>
+  <text class="small" x="102" y="128">runtime · região · tags</text>
+
+  <rect class="box" x="235" y="70" width="150" height="88"/>
+  <text class="text" x="310" y="104">Descoberta</text>
+  <text class="small" x="310" y="128">regiões habilitadas</text>
+  <path class="line" d="M180 114 H225"/>
+
+  <rect class="box strong" x="440" y="55" width="175" height="118"/>
+  <text class="text" x="527" y="91">Worker pool</text>
+  <text class="small" x="527" y="115">concorrência limitada</text>
+  <text class="small" x="527" y="137">cancelamento por contexto</text>
+  <text class="small" x="527" y="157">sem fan-out ilimitado</text>
+  <path class="line" d="M385 114 H430"/>
+
+  <rect class="box" x="570" y="250" width="165" height="88"/>
+  <text class="text" x="652" y="284">AWS Lambda</text>
+  <text class="small" x="652" y="308">paginação + tags</text>
+  <path class="line" d="M565 173 Q565 215 620 215 Q652 215 652 240"/>
+
+  <rect class="box strong" x="285" y="245" width="200" height="98"/>
+  <text class="text" x="385" y="279">Agregação</text>
+  <text class="small" x="385" y="303">filtros + ordenação</text>
+  <text class="small" x="385" y="323">resultado determinístico</text>
+  <path class="line" d="M570 294 H495"/>
+
+  <rect class="box warn" x="25" y="245" width="190" height="98"/>
+  <text class="text" x="120" y="279">Resposta parcial</text>
+  <text class="small" x="120" y="303">funções disponíveis</text>
+  <text class="small" x="120" y="323">+ avisos regionais</text>
+  <path class="line" d="M285 294 H225"/>
+
+  <path class="dash" d="M385 343 V415 H120 V353"/>
+  <text class="small" x="385" y="438">Se todas as regiões falharem, a API retorna erro em vez de sucesso vazio.</text>
+</svg>
