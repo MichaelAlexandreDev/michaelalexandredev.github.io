@@ -6,7 +6,7 @@ currículos em PDF.
 
 ## Site publicado
 
-<https://devstarrk1137.github.io/>
+<https://michaelalexandredev.github.io/>
 
 ## Estrutura
 
