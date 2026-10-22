@@ -1,54 +1,49 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="480" viewBox="0 0 760 480" role="img" aria-labelledby="title desc">
-  <title id="title">Tailwarden concurrent flow</title>
-  <desc id="desc">The API validates filters, discovers regions, and distributes queries to a bounded worker pool. Each worker paginates Lambda functions and optionally retrieves tags. An aggregator sorts results and includes partial-failure warnings.</desc>
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#70e1c1"/>
-    </marker>
-    <style>
-      .box { fill: #151b22; stroke: #3a4653; stroke-width: 2; rx: 12; }
-      .strong { fill: #11221f; stroke: #70e1c1; }
-      .warn { fill: #171c22; stroke: #86b7ff; }
-      .text { fill: #f5f7fa; font: 600 16px Arial, sans-serif; text-anchor: middle; }
-      .small { fill: #a9b2bd; font: 13px Arial, sans-serif; text-anchor: middle; }
-      .line { fill: none; stroke: #70e1c1; stroke-width: 2.5; marker-end: url(#arrow); }
-      .dash { fill: none; stroke: #86b7ff; stroke-width: 2; stroke-dasharray: 7 6; marker-end: url(#arrow); }
-    </style>
-  </defs>
-
-  <rect class="box" x="25" y="70" width="155" height="88"/>
-  <text class="text" x="102" y="104">GET /functions</text>
-  <text class="small" x="102" y="128">runtime · region · tags</text>
-
-  <rect class="box" x="235" y="70" width="150" height="88"/>
-  <text class="text" x="310" y="104">Discovery</text>
-  <text class="small" x="310" y="128">enabled regions</text>
-  <path class="line" d="M180 114 H225"/>
-
-  <rect class="box strong" x="440" y="55" width="175" height="118"/>
-  <text class="text" x="527" y="91">Worker pool</text>
-  <text class="small" x="527" y="115">bounded concurrency</text>
-  <text class="small" x="527" y="137">context cancellation</text>
-  <text class="small" x="527" y="157">no unbounded fan-out</text>
-  <path class="line" d="M385 114 H430"/>
-
-  <rect class="box" x="570" y="250" width="165" height="88"/>
-  <text class="text" x="652" y="284">AWS Lambda</text>
-  <text class="small" x="652" y="308">pagination + tags</text>
-  <path class="line" d="M565 173 Q565 215 620 215 Q652 215 652 240"/>
-
-  <rect class="box strong" x="285" y="245" width="200" height="98"/>
-  <text class="text" x="385" y="279">Aggregation</text>
-  <text class="small" x="385" y="303">filtering + sorting</text>
-  <text class="small" x="385" y="323">deterministic result</text>
-  <path class="line" d="M570 294 H495"/>
-
-  <rect class="box warn" x="25" y="245" width="190" height="98"/>
-  <text class="text" x="120" y="279">Partial response</text>
-  <text class="small" x="120" y="303">available functions</text>
-  <text class="small" x="120" y="323">+ regional warnings</text>
-  <path class="line" d="M285 294 H225"/>
-
-  <path class="dash" d="M385 343 V415 H120 V353"/>
-  <text class="small" x="385" y="438">If every region fails, the API returns an error instead of an empty success.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="830" viewBox="0 0 760 830" role="img" aria-labelledby="tailwarden-flow-en-title tailwarden-flow-en-desc">
+<title id="tailwarden-flow-en-title">Tailwarden concurrent flow</title><desc id="tailwarden-flow-en-desc">GET functions validates filters. If a region is supplied, that region is used directly; otherwise EC2 DescribeRegions discovers enabled regions. Bounded region workers paginate Lambda ListFunctions and apply the runtime filter. If a tags filter is supplied, a separate bounded tag worker pool calls Lambda ListTags for candidate functions. Results are aggregated and sorted. Partial failures become warnings; region discovery failure, total region failure, or candidate tag-read failure returns an error.</desc>
+<defs>
+  <marker id="tailwarden-flow-en-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#58a6ff"/></marker>
+  <marker id="tailwarden-flow-en-blue-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a5d6ff"/></marker>
+  <style>
+    .box { fill: #151b22; stroke: #3a4653; stroke-width: 2; rx: 12; }
+    .strong { fill: #0f1d2e; stroke: #58a6ff; }
+    .text { fill: #f5f7fa; font: 600 16px Arial, sans-serif; text-anchor: middle; }
+    .small { fill: #a9b2bd; font: 13px Arial, sans-serif; text-anchor: middle; }
+    .label { fill: #a5d6ff; font: 600 12px Arial, sans-serif; }
+    .line { fill: none; stroke: #58a6ff; stroke-width: 2.5; marker-end: url(#tailwarden-flow-en-arrow); }
+    .branch { fill: none; stroke: #a5d6ff; stroke-width: 2; stroke-dasharray: 7 6; marker-end: url(#tailwarden-flow-en-blue-arrow); }
+  </style>
+</defs>
+<text class="label" x="30" y="30">01  REGION SCAN</text>
+<rect class="box" x="30" y="55" width="165" height="78"/><text class="text" x="112.5" y="87">GET /functions</text><text class="small" x="112.5" y="111">runtime · region · tags</text>
+<rect class="box" x="230" y="55" width="185" height="78"/><text class="text" x="322.5" y="87">Parse + validate</text><text class="small" x="322.5" y="111">query filters</text>
+<rect class="box" x="500" y="55" width="200" height="78"/><text class="text" x="600" y="87">region provided?</text><text class="small" x="600" y="111">choose scan regions</text>
+<path class="line" d="M195 94 H220"/>
+<path class="line" d="M415 94 H490"/>
+<rect class="box" x="500" y="160" width="200" height="78"/><text class="text" x="600" y="192">EC2 DescribeRegions</text><text class="small" x="600" y="216">only without region</text>
+<path class="line" d="M600 133 V150"/>
+<text class="label" x="610" y="150">no</text>
+<rect class="box strong" x="500" y="280" width="200" height="78"/><text class="text" x="600" y="312">Region workers</text><text class="small" x="600" y="336">bounded concurrency</text>
+<path class="line" d="M600 238 V270"/>
+<path class="branch" d="M700 94 H725 V319 H710"/>
+<text class="label" x="702" y="80">yes</text>
+<rect class="box" x="275" y="280" width="180" height="78"/><text class="text" x="365" y="312">Lambda ListFunctions</text><text class="small" x="365" y="336">paginated</text>
+<rect class="box" x="30" y="280" width="200" height="78"/><text class="text" x="130" y="312">Runtime filter</text><text class="small" x="130" y="336">candidate functions</text>
+<path class="line" d="M500 319 H465"/>
+<path class="line" d="M275 319 H240"/>
+<text class="label" x="148" y="393">02  OPTIONAL TAG FILTER</text>
+<rect class="box" x="30" y="415" width="200" height="78"/><text class="text" x="130" y="447">tags provided?</text><text class="small" x="130" y="471">optional filter</text>
+<rect class="box strong" x="275" y="415" width="180" height="78"/><text class="text" x="365" y="447">Tag workers</text><text class="small" x="365" y="471">separate limit</text>
+<rect class="box" x="500" y="415" width="200" height="78"/><text class="text" x="600" y="447">Lambda ListTags</text><text class="small" x="600" y="471">per candidate</text>
+<path class="line" d="M130 358 V405"/>
+<path class="branch" d="M230 454 H265"/>
+<path class="branch" d="M455 454 H490"/>
+<rect class="box strong" x="275" y="545" width="200" height="78"/><text class="text" x="375" y="577">Aggregate + sort</text><text class="small" x="375" y="601">deterministic order</text>
+<path class="branch" d="M130 493 V584 H265"/>
+<text class="label" x="140" y="518">no tags</text>
+<path class="branch" d="M600 493 V584 H485"/>
+<rect class="box" x="275" y="655" width="200" height="78"/><text class="text" x="375" y="687">200 · data + meta</text><text class="small" x="375" y="711">warnings if partial failures</text>
+<path class="line" d="M375 623 V645"/>
+<rect x="30" y="752" width="700" height="58" rx="10" fill="#0b1320" stroke="#1f3a5c"/>
+<text class="small" x="380" y="776">Some AWS calls fail: return healthy results with warnings.</text>
+<text class="small" x="380" y="798">Region discovery fails, all regions fail, or no candidate tag is read: error 502/504.</text>
 </svg>

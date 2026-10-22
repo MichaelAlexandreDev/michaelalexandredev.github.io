@@ -1,64 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="500" viewBox="0 0 760 500" role="img" aria-labelledby="title desc">
-  <title id="title">Current Ayvu pipeline</title>
-  <desc id="desc">The original EPUB is inspected and segmented while preserving markup. Text passes through cache, memory, and a local translator, receives glossary rules, is rebuilt into a new EPUB, and proceeds to review and validation.</desc>
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#70e1c1"/>
-    </marker>
-    <style>
-      .box { fill: #151b22; stroke: #3a4653; stroke-width: 2; rx: 12; }
-      .strong { fill: #11221f; stroke: #70e1c1; }
-      .text { fill: #f5f7fa; font: 600 16px Arial, sans-serif; text-anchor: middle; }
-      .small { fill: #a9b2bd; font: 13px Arial, sans-serif; text-anchor: middle; }
-      .line { fill: none; stroke: #70e1c1; stroke-width: 2.5; marker-end: url(#arrow); }
-      .branch { fill: none; stroke: #86b7ff; stroke-width: 2; stroke-dasharray: 7 6; marker-end: url(#arrow); }
-    </style>
-  </defs>
-
-  <rect class="box strong" x="25" y="55" width="145" height="78"/>
-  <text class="text" x="97" y="87">Original EPUB</text>
-  <text class="small" x="97" y="110">read-only</text>
-
-  <rect class="box" x="225" y="45" width="160" height="98"/>
-  <text class="text" x="305" y="78">Inspection</text>
-  <text class="small" x="305" y="101">visible text</text>
-  <text class="small" x="305" y="121">protected markup</text>
-
-  <rect class="box" x="445" y="45" width="145" height="98"/>
-  <text class="text" x="517" y="78">Cache + TM</text>
-  <text class="small" x="517" y="101">exact match</text>
-  <text class="small" x="517" y="121">similarity</text>
-
-  <rect class="box" x="625" y="55" width="110" height="78"/>
-  <text class="text" x="680" y="87">Provider</text>
-  <text class="small" x="680" y="110">local HTTP</text>
-
-  <path class="line" d="M170 94 H215"/>
-  <path class="line" d="M385 94 H435"/>
-  <path class="line" d="M590 94 H615"/>
-
-  <rect class="box" x="530" y="220" width="150" height="78"/>
-  <text class="text" x="605" y="252">Glossary</text>
-  <text class="small" x="605" y="275">controlled terms</text>
-  <path class="line" d="M680 133 V180 Q680 210 650 210 H605 V210"/>
-
-  <rect class="box strong" x="280" y="210" width="185" height="98"/>
-  <text class="text" x="372" y="243">Reconstruction</text>
-  <text class="small" x="372" y="266">HTML and assets</text>
-  <text class="small" x="372" y="286">new EPUB file</text>
-  <path class="line" d="M530 259 H475"/>
-
-  <rect class="box" x="30" y="210" width="180" height="98"/>
-  <text class="text" x="120" y="243">CSV review</text>
-  <text class="small" x="120" y="266">export / apply</text>
-  <text class="small" x="120" y="286">human decision</text>
-  <path class="branch" d="M280 259 H220"/>
-
-  <rect class="box strong" x="280" y="385" width="185" height="78"/>
-  <text class="text" x="372" y="417">Final validation</text>
-  <text class="small" x="372" y="440">links · images · chapters</text>
-  <path class="line" d="M372 308 V375"/>
-
-  <path class="branch" d="M120 308 V424 H270"/>
-  <text class="small" x="117" y="350">reviewed EPUB</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="740" viewBox="0 0 760 740" role="img" aria-labelledby="ayvu-flow-en-title ayvu-flow-en-desc">
+<title id="ayvu-flow-en-title">Ayvu translation and optional review flows</title><desc id="ayvu-flow-en-desc">The original EPUB remains unchanged. Visible text is extracted while markup is protected. An exact cache hit is used immediately; otherwise optional translation memory may reuse an applicable match. Only a normal-mode miss calls the HTTP translator. All translated results pass through the glossary, are rebuilt into a new EPUB, and are validated. Optionally, translated segments are exported as CSV; a separate apply-review command combines the original EPUB with a reviewed CSV to create and validate another EPUB.</desc>
+<defs>
+  <marker id="ayvu-flow-en-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#58a6ff"/></marker>
+  <marker id="ayvu-flow-en-blue-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a5d6ff"/></marker>
+  <style>
+    .box { fill: #151b22; stroke: #3a4653; stroke-width: 2; rx: 12; }
+    .strong { fill: #0f1d2e; stroke: #58a6ff; }
+    .text { fill: #f5f7fa; font: 600 16px Arial, sans-serif; text-anchor: middle; }
+    .small { fill: #a9b2bd; font: 13px Arial, sans-serif; text-anchor: middle; }
+    .label { fill: #a5d6ff; font: 600 12px Arial, sans-serif; }
+    .line { fill: none; stroke: #58a6ff; stroke-width: 2.5; marker-end: url(#ayvu-flow-en-arrow); }
+    .branch { fill: none; stroke: #a5d6ff; stroke-width: 2; stroke-dasharray: 7 6; marker-end: url(#ayvu-flow-en-blue-arrow); }
+  </style>
+</defs>
+<text class="label" x="30" y="28">01  NORMAL TRANSLATION</text>
+<rect class="box strong" x="30" y="50" width="155" height="78"/><text class="text" x="107.5" y="82">Original EPUB</text><text class="small" x="107.5" y="106">read-only</text>
+<rect class="box" x="220" y="50" width="190" height="78"/><text class="text" x="315" y="82">Extract visible text</text><text class="small" x="315" y="106">protect markup</text>
+<rect class="box" x="500" y="50" width="175" height="78"/><text class="text" x="587.5" y="82">Exact cache</text><text class="small" x="587.5" y="106">hit skips translator</text>
+<path class="line" d="M185 89 H210"/>
+<path class="line" d="M410 89 H490"/>
+<rect class="box" x="500" y="160" width="175" height="78"/><text class="text" x="587.5" y="192">Translation memory</text><text class="small" x="587.5" y="216">optional · applicable hit</text>
+<path class="line" d="M587 128 V150"/>
+<text class="label" x="596" y="148">miss</text>
+<rect class="box" x="500" y="270" width="175" height="78"/><text class="text" x="587.5" y="302">HTTP translator</text><text class="small" x="587.5" y="326">normal-mode miss</text>
+<path class="line" d="M587 238 V260"/>
+<text class="label" x="596" y="257">no applied match</text>
+<rect class="box" x="500" y="390" width="175" height="78"/><text class="text" x="587.5" y="422">Glossary</text><text class="small" x="587.5" y="446">after every result</text>
+<path class="line" d="M587 348 V380"/>
+<path d="M675 89 H705 V429 H685" fill="none" stroke="#a5d6ff" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ayvu-flow-en-blue-arrow)"/>
+<path d="M675 199 H705" fill="none" stroke="#a5d6ff" stroke-width="2" stroke-dasharray="7 6"/>
+<text class="label" x="680" y="76">hit</text>
+<text class="label" x="680" y="185">applied</text>
+<rect class="box strong" x="275" y="390" width="185" height="78"/><text class="text" x="367.5" y="422">Rebuild new EPUB</text><text class="small" x="367.5" y="446">HTML + assets</text>
+<rect class="box" x="30" y="390" width="190" height="78"/><text class="text" x="125" y="422">Validate output</text><text class="small" x="125" y="446">links · images · chapters</text>
+<path class="line" d="M500 429 H470"/>
+<path class="line" d="M275 429 H230"/>
+<text class="label" x="30" y="515">02  OPTIONAL HUMAN REVIEW</text>
+<rect class="box" x="500" y="540" width="175" height="78"/><text class="text" x="587.5" y="572">Export CSV</text><text class="small" x="587.5" y="596">translated segments</text>
+<rect class="box" x="275" y="540" width="185" height="78"/><text class="text" x="367.5" y="572">Human review</text><text class="small" x="367.5" y="596">edit the CSV</text>
+<rect class="box" x="30" y="540" width="190" height="78"/><text class="text" x="125" y="572">apply-review</text><text class="small" x="125" y="596">original + reviewed CSV</text>
+<path class="branch" d="M587 468 V530"/>
+<path class="branch" d="M500 579 H470"/>
+<path class="branch" d="M275 579 H230"/>
+<rect class="box strong" x="30" y="642" width="190" height="78"/><text class="text" x="125" y="674">Reviewed EPUB</text><text class="small" x="125" y="698">create + validate</text>
+<path class="branch" d="M125 618 V632"/>
+<rect x="275" y="646" width="400" height="62" rx="10" fill="#0b1320" stroke="#1f3a5c"/>
+<text class="small" x="475" y="672">CSV export is optional.</text>
+<text class="small" x="475" y="696">apply-review uses the source unchanged.</text>
 </svg>

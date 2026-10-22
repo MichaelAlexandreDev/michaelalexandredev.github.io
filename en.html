@@ -9,11 +9,20 @@
   <meta property="og:description" content="Backend projects with documented technical decisions, automated tests, and explicit failure handling.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://michaelalexandredev.github.io/en.html">
+  <meta property="og:image" content="https://michaelalexandredev.github.io/assets/og-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Michael Alexandre Schimitt — Backend Developer">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="alternate" hreflang="pt-BR" href="index.html">
   <link rel="alternate" hreflang="en" href="en.html">
   <link rel="alternate" hreflang="x-default" href="index.html">
   <title>Michael Alexandre Schimitt — Backend Developer</title>
   <link rel="stylesheet" href="styles.css">
+  <script>if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("motion");</script>
+  <script src="main.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Skip to content</a>
@@ -60,8 +69,8 @@ Java 17/21  Go  Python  AWS
 Spring  Redis  GraphQL  gRPC
 
 <span class="terminal-muted">$</span> status --portfolio
-Ayvu 330 · Lume 191
-Wallet 49 · CodeVita #8,005
+Ayvu 468 · Lume 191
+Wallet 58 · CodeVita #8,005
 <span class="terminal-success">● ready to build</span></code></pre>
       </aside>
     </section>
@@ -105,22 +114,23 @@ Wallet 49 · CodeVita #8,005
                   <ul>
                     <li>A single transaction covers debit, credit, and creation of the pending notification.</li>
                     <li>Deterministically ordered pessimistic locks prevent double spending and reduce deadlock risk.</li>
-                    <li>Durable notification retries use <code>FOR UPDATE SKIP LOCKED</code>.</li>
+                    <li>Idempotency via <code>Idempotency-Key</code>: a replay returns the original transfer and mismatched data returns 409.</li>
+                    <li>Durable notification retries use <code>FOR UPDATE SKIP LOCKED</code> with an attempt limit.</li>
                   </ul>
                 </div>
                 <div>
                   <h4>Evidence</h4>
                   <ul>
-                    <li>49 tests: 28 integration, 14 HTTP client, and 7 domain tests.</li>
+                    <li>58 tests: 36 integration, 14 HTTP client, 7 domain, and 1 profile test.</li>
                     <li>Real PostgreSQL instances through Testcontainers.</li>
-                    <li>Rollback, concurrency, timeout, and outage scenarios.</li>
+                    <li>Rollback, concurrency, idempotent replay, timeout, and outage scenarios.</li>
                   </ul>
                 </div>
               </div>
               <a class="text-link" href="https://github.com/MichaelAlexandreDev/wallet-api" target="_blank" rel="noopener noreferrer">Code and documentation <span aria-hidden="true">↗</span></a>
             </div>
             <figure class="architecture">
-              <img src="assets/wallet-flow-en.svg" alt="Wallet API flow: request, authorization, transaction with locks, persistence, and subsequent notification processing.">
+              <img src="assets/wallet-flow-en.svg" alt="Wallet API: POST with an Idempotency-Key; a reused key returns the original transfer or 409. A new key starts a transaction with wallet locks and a key recheck, balance changes, external authorization while locks remain held, persistence and commit; then a worker notifies and records SENT, a retry, or FAILED in PostgreSQL.">
               <figcaption>The payment remains confirmed regardless of the notification service's subsequent availability.</figcaption>
             </figure>
           </div>
@@ -157,12 +167,12 @@ Wallet 49 · CodeVita #8,005
                   </ul>
                 </div>
               </div>
-              <p class="evidence-line"><strong>Evidence:</strong> 330 automated tests across 21 files; public architecture and roadmap items are not presented as completed features.</p>
+              <p class="evidence-line"><strong>Evidence:</strong> 468 automated tests across 20 files; public architecture and roadmap items are not presented as completed features.</p>
               <a class="text-link" href="https://github.com/MichaelAlexandreDev/ayvu" target="_blank" rel="noopener noreferrer">Code, documentation, and roadmap <span aria-hidden="true">↗</span></a>
             </div>
             <figure class="architecture">
-              <img src="assets/ayvu-flow-en.svg" alt="Ayvu pipeline: original EPUB, safe segmentation, cache and memory, local translator, reconstruction, review, and validation.">
-              <figcaption>The original remains read-only; every translation produces a new validated artifact.</figcaption>
+              <img src="assets/ayvu-flow-en.svg" alt="Ayvu: original EPUB, visible-text extraction, exact cache; if needed, optional translation memory or HTTP translator; glossary, new EPUB, and validation. Optional review edits a CSV and runs apply-review against the original EPUB.">
+              <figcaption>The source is not overwritten; generated EPUB output is validated.</figcaption>
             </figure>
           </div>
         </article>
@@ -206,8 +216,8 @@ Wallet 49 · CodeVita #8,005
               <a class="text-link" href="https://github.com/MichaelAlexandreDev/tailwarden" target="_blank" rel="noopener noreferrer">Code and documentation <span aria-hidden="true">↗</span></a>
             </div>
             <figure class="architecture">
-              <img src="assets/tailwarden-flow-en.svg" alt="Tailwarden flow: the API receives filters, distributes queries to bounded regional workers, paginates AWS results, and aggregates functions and warnings.">
-              <figcaption>Regional failures are isolated and returned as warnings when valid results remain available.</figcaption>
+              <img src="assets/tailwarden-flow-en.svg" alt="Tailwarden: validates filters, uses the supplied region or discovers regions through EC2, lists paginated Lambda functions with regional workers; a separate tag worker pool runs only with a tag filter before aggregation and a response with optional warnings.">
+              <figcaption>Regional failures become warnings when at least one region was scanned successfully.</figcaption>
             </figure>
           </div>
         </article>
@@ -292,7 +302,6 @@ Wallet 49 · CodeVita #8,005
       <div class="socials">
         <a href="https://github.com/MichaelAlexandreDev" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/michael-alexandre-215b60380/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="tel:+5543996568892">+55 (43) 99656-8892</a>
       </div>
     </section>
   </main>

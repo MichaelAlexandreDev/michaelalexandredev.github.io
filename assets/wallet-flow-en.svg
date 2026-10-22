@@ -1,54 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="460" viewBox="0 0 760 460" role="img" aria-labelledby="title desc">
-  <title id="title">Wallet API technical flow</title>
-  <desc id="desc">A transfer request passes through external authorization, enters a PostgreSQL transaction with ordered locks, persists the payment and a pending notification, and is later processed with retries.</desc>
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#70e1c1"/>
-    </marker>
-    <style>
-      .box { fill: #151b22; stroke: #3a4653; stroke-width: 2; rx: 12; }
-      .strong { fill: #11221f; stroke: #70e1c1; }
-      .text { fill: #f5f7fa; font: 600 17px Arial, sans-serif; text-anchor: middle; }
-      .small { fill: #a9b2bd; font: 14px Arial, sans-serif; text-anchor: middle; }
-      .line { fill: none; stroke: #70e1c1; stroke-width: 2.5; marker-end: url(#arrow); }
-      .dash { fill: none; stroke: #86b7ff; stroke-width: 2; stroke-dasharray: 7 6; marker-end: url(#arrow); }
-    </style>
-  </defs>
-
-  <rect class="box" x="30" y="55" width="160" height="78"/>
-  <text class="text" x="110" y="88">POST /transfer</text>
-  <text class="small" x="110" y="112">HTTP validation</text>
-
-  <rect class="box" x="300" y="35" width="170" height="98"/>
-  <text class="text" x="385" y="76">Authorization</text>
-  <text class="small" x="385" y="100">timeout + fail closed</text>
-
-  <rect class="box strong" x="565" y="45" width="165" height="98"/>
-  <text class="text" x="647" y="79">Transaction</text>
-  <text class="small" x="647" y="103">locks by lowest ID</text>
-  <text class="small" x="647" y="123">debit + credit</text>
-
-  <path class="line" d="M190 94 H290"/>
-  <path class="line" d="M470 94 H555"/>
-
-  <rect class="box strong" x="510" y="220" width="220" height="98"/>
-  <text class="text" x="620" y="253">PostgreSQL</text>
-  <text class="small" x="620" y="277">confirmed transfer</text>
-  <text class="small" x="620" y="297">pending notification</text>
-  <path class="line" d="M647 143 V210"/>
-
-  <rect class="box" x="250" y="230" width="175" height="78"/>
-  <text class="text" x="337" y="263">Worker</text>
-  <text class="small" x="337" y="287">SKIP LOCKED</text>
-  <path class="dash" d="M500 269 H435"/>
-
-  <rect class="box" x="30" y="220" width="155" height="98"/>
-  <text class="text" x="107" y="253">Notifier</text>
-  <text class="small" x="107" y="277">external HTTP</text>
-  <text class="small" x="107" y="297">retries</text>
-  <path class="line" d="M250 269 H195"/>
-
-  <rect x="30" y="370" width="700" height="56" rx="10" fill="#0d1518" stroke="#28443d"/>
-  <text class="small" x="380" y="394">A notification failure does not undo an already confirmed transfer.</text>
-  <text class="small" x="380" y="416">Pending state survives restarts and enables another attempt.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="590" viewBox="0 0 760 590" role="img" aria-labelledby="wallet-flow-en-title wallet-flow-en-desc">
+<title id="wallet-flow-en-title">Wallet API technical flow</title><desc id="wallet-flow-en-desc">Requests require an Idempotency-Key. A reused key returns the original transfer, or 409 if the data differs. A new key starts a transaction: wallets are locked by lowest ID and the key is checked again, then rules and balances are processed and the HTTP authorizer is called while locks are held. After authorization, the transfer with a pending notification is saved and committed. A scheduler selects pending work with SKIP LOCKED, calls the notifier, and records SENT, a retry, or FAILED once the attempt limit is reached.</desc>
+<defs>
+  <marker id="wallet-flow-en-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#58a6ff"/></marker>
+  <marker id="wallet-flow-en-blue-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a5d6ff"/></marker>
+  <style>
+    .box { fill: #151b22; stroke: #3a4653; stroke-width: 2; rx: 12; }
+    .strong { fill: #0f1d2e; stroke: #58a6ff; }
+    .text { fill: #f5f7fa; font: 600 16px Arial, sans-serif; text-anchor: middle; }
+    .small { fill: #a9b2bd; font: 13px Arial, sans-serif; text-anchor: middle; }
+    .label { fill: #a5d6ff; font: 600 12px Arial, sans-serif; }
+    .line { fill: none; stroke: #58a6ff; stroke-width: 2.5; marker-end: url(#wallet-flow-en-arrow); }
+    .branch { fill: none; stroke: #a5d6ff; stroke-width: 2; stroke-dasharray: 7 6; marker-end: url(#wallet-flow-en-blue-arrow); }
+  </style>
+</defs>
+<text class="label" x="30" y="31">01  TRANSFER · ONE TRANSACTION</text>
+<rect class="box" x="30" y="55" width="135" height="78"/><text class="text" x="97.5" y="87">POST /transfer</text><text class="small" x="97.5" y="111">Idempotency-Key</text>
+<rect class="box" x="195" y="55" width="155" height="78"/><text class="text" x="272.5" y="87">Key reused?</text><text class="small" x="272.5" y="111">replay or 409</text>
+<rect class="box strong" x="380" y="55" width="170" height="78"/><text class="text" x="465" y="87">Transaction + locks</text><text class="small" x="465" y="111">lowest ID + recheck</text>
+<rect class="box" x="580" y="55" width="150" height="78"/><text class="text" x="655" y="87">Rules + balances</text><text class="small" x="655" y="111">debit and credit</text>
+<path class="line" d="M165 94 H185"/>
+<path class="line" d="M350 94 H370"/>
+<text class="label" x="365" y="150" text-anchor="middle">new key</text>
+<path class="line" d="M550 94 H570"/>
+<rect class="box" x="520" y="185" width="210" height="80"/><text class="text" x="625" y="217">HTTP authorizer</text><text class="small" x="625" y="241">locks still held</text>
+<rect class="box" x="285" y="185" width="190" height="80"/><text class="text" x="380" y="217">Save transfer</text><text class="small" x="380" y="241">notification pending</text>
+<rect class="box strong" x="30" y="185" width="210" height="80"/><text class="text" x="135" y="217">COMMIT · PostgreSQL</text><text class="small" x="135" y="241">balances + transfer</text>
+<path class="line" d="M655 133 V175"/>
+<path class="line" d="M520 225 H485"/>
+<path class="line" d="M285 225 H250"/>
+<text class="label" x="30" y="306">02  NOTIFICATION · LATER PROCESSING</text>
+<rect class="box" x="30" y="330" width="140" height="82"/><text class="text" x="100" y="362">Scheduler</text><text class="small" x="100" y="386">worker</text>
+<rect class="box strong" x="205" y="330" width="150" height="82"/><text class="text" x="280" y="362">PostgreSQL</text><text class="small" x="280" y="386">SKIP LOCKED</text>
+<rect class="box" x="390" y="330" width="150" height="82"/><text class="text" x="465" y="362">Notifier</text><text class="small" x="465" y="386">external HTTP</text>
+<rect class="box" x="575" y="330" width="155" height="82"/><text class="text" x="652.5" y="362">Record</text><text class="small" x="652.5" y="386">SENT · retry · FAILED</text>
+<path class="line" d="M170 371 H195"/>
+<path class="line" d="M355 371 H380"/>
+<path class="line" d="M540 371 H565"/>
+<path class="branch" d="M652.5 412 V449 H280 V422"/>
+<text class="label" x="417" y="443">database update</text>
+<rect x="30" y="482" width="700" height="80" rx="10" fill="#0b1320" stroke="#1f3a5c"/>
+<text class="small" x="380" y="506">Same key and same data return the original transfer; different data returns 409.</text>
+<text class="small" x="380" y="528">Authorization denial rolls back; the HTTP call happens while wallet locks are held.</text>
+<text class="small" x="380" y="550">Notification failure does not undo the transfer: it is retried up to the limit (FAILED).</text>
 </svg>

@@ -5,10 +5,10 @@
   --text: #f5f7fa;
   --muted: #a9b2bd;
   --line: #2a323c;
-  --accent: #70e1c1;
-  --accent-soft: rgba(112, 225, 193, 0.11);
-  --blue: #86b7ff;
-  --blue-soft: rgba(134, 183, 255, 0.11);
+  --accent: #58a6ff;
+  --accent-soft: rgba(88, 166, 255, 0.11);
+  --blue: #a5d6ff;
+  --blue-soft: rgba(165, 214, 255, 0.1);
   --max: 1180px;
   --radius: 18px;
 }
@@ -25,8 +25,8 @@ body {
   margin: 0;
   color: var(--text);
   background:
-    radial-gradient(circle at 80% 0%, rgba(112, 225, 193, 0.08), transparent 28rem),
-    radial-gradient(circle at 0% 25%, rgba(134, 183, 255, 0.06), transparent 24rem),
+    radial-gradient(circle at 80% 0%, rgba(88, 166, 255, 0.08), transparent 28rem),
+    radial-gradient(circle at 0% 25%, rgba(165, 214, 255, 0.05), transparent 24rem),
     var(--bg);
   font-family: Inter, "Segoe UI", Arial, sans-serif;
   line-height: 1.65;
@@ -37,7 +37,7 @@ a {
 }
 
 code {
-  color: #d7fff4;
+  color: #d6e8ff;
   font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
   font-size: 0.91em;
 }
@@ -48,7 +48,7 @@ code {
   left: -9999px;
   z-index: 100;
   padding: 0.65rem 1rem;
-  color: #07100d;
+  color: #04111f;
   background: var(--accent);
   font-weight: 800;
 }
@@ -201,7 +201,7 @@ h1 em {
 
 .button.primary {
   border-color: var(--accent);
-  color: #07100d;
+  color: #04111f;
   background: var(--accent);
 }
 
@@ -217,11 +217,12 @@ h1 em {
 }
 
 .terminal {
+  --tilt: 1.2deg;
   border: 1px solid #3f3f46;
   border-radius: 0;
   background: rgba(24, 24, 27, 0.9);
   box-shadow: 18px 18px 0 rgba(0, 0, 0, 0.32);
-  transform: rotate(1.2deg);
+  transform: rotate(var(--tilt));
 }
 
 .terminal-bar {
@@ -338,10 +339,17 @@ h2 {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: rgba(17, 21, 26, 0.7);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(88, 166, 255, 0.45);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(88, 166, 255, 0.08);
 }
 
 .project-card.featured {
-  background: linear-gradient(135deg, rgba(112, 225, 193, 0.055), rgba(17, 21, 26, 0.88) 45%);
+  background: linear-gradient(135deg, rgba(88, 166, 255, 0.06), rgba(17, 21, 26, 0.88) 45%);
 }
 
 .project-card.wip {
@@ -474,7 +482,8 @@ h2 {
   background: #0d1116;
 }
 
-.architecture img {
+.architecture img,
+.architecture svg {
   display: block;
   width: 100%;
   height: auto;
@@ -493,6 +502,24 @@ h2 {
   font-size: 0.9rem;
   font-weight: 800;
   text-underline-offset: 5px;
+  text-decoration-color: rgba(88, 166, 255, 0.45);
+  transition: text-underline-offset 180ms ease, text-decoration-color 180ms ease;
+}
+
+.text-link span {
+  display: inline-block;
+  transition: transform 180ms ease;
+}
+
+.text-link:hover,
+.text-link:focus {
+  text-underline-offset: 8px;
+  text-decoration-color: currentColor;
+}
+
+.text-link:hover span,
+.text-link:focus span {
+  transform: translate(3px, -3px);
 }
 
 .skills-grid {
@@ -712,7 +739,7 @@ footer {
     width: calc(100% - 18px);
     max-width: 430px;
     margin-left: 2px;
-    transform: rotate(0.65deg);
+    --tilt: 0.65deg;
   }
 
   .terminal pre {
@@ -724,6 +751,165 @@ footer {
     flex-direction: column;
     gap: 0.45rem;
   }
+}
+
+/* Motion: only active when JS adds .motion and the user has not asked for reduced motion. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+}
+
+@keyframes terminal-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px) rotate(calc(var(--tilt) + 2deg));
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes ping {
+  0% {
+    box-shadow: 0 0 0 0 rgba(88, 166, 255, 0.55);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 9px rgba(88, 166, 255, 0);
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: calc(var(--len) * 1px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes travel {
+  0% {
+    stroke-dashoffset: 14px;
+    opacity: 0;
+  }
+  10%,
+  70% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: calc(var(--len) * -1px);
+    opacity: 0;
+  }
+}
+
+.motion .hero-copy > * {
+  animation: rise 800ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+.motion .hero-copy > :nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.motion .hero-copy > :nth-child(3) {
+  animation-delay: 180ms;
+}
+
+.motion .hero-copy > :nth-child(4) {
+  animation-delay: 270ms;
+}
+
+.motion .terminal {
+  animation: terminal-in 900ms cubic-bezier(0.2, 0.7, 0.2, 1) 200ms backwards;
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 1px;
+  vertical-align: -0.15em;
+  background: var(--accent);
+  animation: blink 1s steps(1) infinite;
+}
+
+.terminal-success {
+  transition: color 400ms ease, text-shadow 400ms ease;
+}
+
+.terminal.is-ready .terminal-success {
+  color: var(--accent);
+  text-shadow: 0 0 18px rgba(88, 166, 255, 0.45);
+}
+
+.motion .status.active span,
+.motion .status.maintained span {
+  animation: ping 2.4s ease-out infinite;
+}
+
+.motion .reveal:not(.is-visible) {
+  opacity: 0;
+}
+
+.motion .reveal.is-visible {
+  animation: rise 750ms cubic-bezier(0.2, 0.7, 0.2, 1) var(--delay, 0ms) backwards;
+}
+
+.motion .flow:not(.is-visible) * {
+  opacity: 0;
+}
+
+.motion .flow.is-visible rect,
+.motion .flow.is-visible text {
+  transform-box: fill-box;
+  animation: fade-up 450ms ease calc(var(--i, 0) * 32ms) backwards;
+}
+
+.motion .flow.is-visible .line {
+  stroke-dasharray: calc(var(--len) * 1px);
+  animation: draw 550ms ease-out calc(var(--i, 0) * 32ms) backwards;
+}
+
+.motion .flow.is-visible .branch {
+  animation: fade 600ms ease calc(var(--i, 0) * 32ms) backwards;
+}
+
+.flow .pulse {
+  display: none;
+}
+
+.motion .flow.is-visible .pulse {
+  display: inline;
+  fill: none;
+  stroke: #e6f1ff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 14px calc(var(--len) * 1px + 14px);
+  stroke-dashoffset: 14px;
+  opacity: 0;
+  animation: travel 2.6s ease-in-out calc(1.6s + var(--i, 0) * 70ms) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
