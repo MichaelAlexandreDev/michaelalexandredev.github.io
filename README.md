@@ -1,4 +1,4 @@
-# Portfólio v2 — Michael Salvador
+# Portfólio v2 — Michael Alexandre Schimitt
 
 Site estático bilíngue com apresentação profissional, projetos detalhados,
 decisões técnicas, diagramas de arquitetura, competências, certificações e
